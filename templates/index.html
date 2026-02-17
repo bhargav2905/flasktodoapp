@@ -1,0 +1,101 @@
+{% extends 'base.html' %}
+{% block body %}
+
+<div class="container py-5">
+
+    <!-- Page Header -->
+    <div class="text-center mb-5">
+        <h1 class="fw-bold">📝 Bhargav's Task Tracker</h1>
+        <p class="text-muted">Helping Bhargav to plan and execute his daily tasks</p>
+    </div>
+
+    <!-- Add Todo Card -->
+    <div class="row justify-content-center mb-5">
+        <div class="col-lg-6 col-md-8">
+            <div class="card shadow-lg border-0">
+                <div class="card-body p-4">
+
+                    <h4 class="mb-4 text-center">Add New Task</h4>
+
+                    <form action="/" method="POST">
+                        <div class="mb-3">
+                            <label class="form-label fw-semibold">Task Title</label>
+                            <input type="text" class="form-control form-control-lg" name="title" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label fw-semibold">Task Description</label>
+                            <input type="text" class="form-control form-control-lg" name="desc" required>
+                        </div>
+
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-dark btn-lg">
+                                Add Task
+                            </button>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Todo List -->
+    <div class="card shadow-sm border-0">
+        <div class="card-body p-4">
+
+            <h4 class="mb-4">Your Tasks</h4>
+
+            {% if allTodo|length == 0 %}
+                <div class="alert alert-secondary text-center">
+                    No tasks yet. Start by adding one above!
+                </div>
+            {% else %}
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle">
+                        <thead class="table-light">
+                            <tr>
+                                <th>#</th>
+                                <th>Title</th>
+                                <th>Description</th>
+                                <th>Created</th>
+                                <th class="text-end">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for todo in allTodo %}
+                            <tr>
+                                <td>{{ loop.index }}</td>
+                                <td class="fw-semibold">{{ todo.title }}</td>
+                                <td>{{ todo.desc }}</td>
+                                <td>
+                                    {{ todo.date_created.strftime('%d %b %Y') }}
+                                </td>
+                                <td class="text-end">
+                                    <a href="/update/{{ todo.sno }}" class="btn btn-outline-dark btn-sm">
+                                        Edit
+                                    </a>
+                                    <a href="/delete/{{ todo.sno }}" class="btn btn-outline-danger btn-sm">
+                                        Done
+                                    </a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            {% endif %}
+
+        </div>
+    </div>
+
+</div>
+
+<!-- Branding Footer -->
+<footer class="text-center mt-5 py-4 border-top">
+    <p class="mb-1 fw-semibold">Built with ❤️ by Bhargav</p>
+    <small class="text-muted">© 2026 Bhargav Palav's Work</small>
+</footer>
+
+{% endblock body %}
+
